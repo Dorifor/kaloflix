@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Kaloflix - Accueil
+{% block title %}Kaloflix -
+	{{ genreId.libelle }}
 {% endblock %}
 
 {% block body %}
+	<h1 class="text-center text-white">Liste de films
+		{{ genreId.libelle }}</h1>
 	<div class="container d-flex flex-wrap justify-content-start">
-		{% for film in films %}
+		{% for film in genreId.films %}
 			<div class="card mx-auto my-3 p-1 rounded shadow" style="max-width: 18rem; min-width: 18rem; background-color: #1a1a1a;">
 				<img src="{{ film.img }}" alt="film image" class="card-img-top">
 				<div class="card-body rounded" style="background-color: #1a1a1a">
@@ -21,5 +24,4 @@
 			</div>
 		{% endfor %}
 	</div>
-
 {% endblock %}

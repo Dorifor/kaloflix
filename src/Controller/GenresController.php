@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\FilmRepository;
+use App\Entity\Genre;
 use App\Repository\GenreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Package;
@@ -10,22 +10,21 @@ use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AccueilController extends AbstractController
+class GenresController extends AbstractController
 {
-    #[Route('/', name: 'app_kaloflix_index')]
-    public function index(FilmRepository $filmRepository, GenreRepository $genreRepository): Response
+    #[Route('/genres/{id}', name: 'app_kaloflix_genre')]
+    public function index(GenreRepository $genreRepository, $id): Response
     {
         $package = new Package(new EmptyVersionStrategy);
         $logo = $package->getUrl('/images/kaloflix.png');
 
-        $films = $filmRepository->findAll();
-        
+        $genreId = $genreRepository->find($id);
         $genresListe = $genreRepository->findAll();
 
-        return $this->render('accueil/index.html.twig', [
+        return $this->render('genres/index.html.twig', [
             'logo' => $logo,
-            'films' => $films,
-            'genresListe' => $genresListe
+            'genreId' => $genreId,
+            'genresListe' => $genresListe,
         ]);
     }
 }
